@@ -1,0 +1,25 @@
+---
+
+- name: General Config
+
+  hosts: routers
+
+  tasks:
+
+  - name: Add loopback
+
+    ios_interface:
+      name: Loopback0
+      state: present
+
+  - name: Add ip on loopback interface and description
+    ios_config:
+      lines:
+        - description configured with ansible
+        - ip address 1.1.1.1 255.255.255.255
+      parents: interface Loopback0
+
+  - name: Remove interface Loopback0
+    ios_config:
+      lines:
+        - no interface loopback0
